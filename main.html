@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Mi Reina 💃</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #fde8f0 0%, #fde8ff 50%, #e8f0ff 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    overflow-x: hidden;
+  }
+
+  .stars {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    font-size: 20px;
+    animation: floatStar linear infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes floatStar {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  .card {
+    background: rgba(255,255,255,0.85);
+    border-radius: 32px;
+    padding: 2.5rem 2rem;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(220, 100, 180, 0.2);
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.5) rotate(-5deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .bear-container {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .bear-container:hover { transform: scale(1.08) rotate(-3deg); }
+  .bear-container:active { transform: scale(0.95); }
+
+  .bear-container svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .speech-bubble {
+    display: none;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 2px solid #f472b6;
+    border-radius: 18px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #e0569a;
+    white-space: nowrap;
+    z-index: 10;
+    animation: popInBubble 0.3s ease;
+    box-shadow: 0 4px 12px rgba(224, 86, 154, 0.2);
+  }
+
+  @keyframes popInBubble {
+    0% { transform: translateX(-50%) scale(0.5); opacity: 0; }
+    100% { transform: translateX(-50%) scale(1); opacity: 1; }
+  }
+
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 8px 0;
+    border-style: solid;
+    border-color: white transparent transparent;
+  }
+
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 11px 9px 0;
+    border-style: solid;
+    border-color: #f472b6 transparent transparent;
+  }
+
+  .blink { animation: blink 3s infinite; }
+  @keyframes blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.05); }
+  }
+
+  .bounce { animation: bounce 2s ease-in-out infinite; }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: #e0569a;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+    text-shadow: 2px 2px 0 rgba(224, 86, 154, 0.15);
+  }
+
+  .subtitle {
+    font-size: 1.05rem;
+    color: #9a6fb0;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+
+  .message-box {
+    background: linear-gradient(135deg, #fff0f8, #f5eeff);
+    border-radius: 20px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 2px dashed #f5aadc;
+  }
+
+  .message-box p {
+    font-size: 0.95rem;
+    color: #7a4a8a;
+    line-height: 1.7;
+  }
+
+  .heart-emoji {
+    font-size: 1.4rem;
+    display: inline-block;
+    animation: heartbeat 1.2s ease-in-out infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+  }
+
+  .hug-btn {
+    background: linear-gradient(135deg, #f472b6, #c084fc);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 0.9rem 2rem;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 20px rgba(196, 100, 200, 0.4);
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: visible;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hug-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 10px 30px rgba(196, 100, 200, 0.5);
+  }
+
+  .hug-btn:active { transform: scale(0.96); }
+
+  .hug-animation-container {
+    display: none;
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 50px;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .hug-char {
+    position: absolute;
+    font-size: 2rem;
+    bottom: 0;
+  }
+
+  .char-1 { left: 10px; animation: char1Hug 2.5s ease-out forwards; }
+  .char-2 { right: 10px; animation: char2Hug 2.5s ease-out forwards; }
+  .heart-pop { 
+    left: 50%; 
+    transform: translateX(-50%); 
+    bottom: 15px; 
+    font-size: 1.5rem; 
+    opacity: 0; 
+    animation: heartPop 2.5s ease-out forwards; 
+  }
+
+  @keyframes char1Hug {
+    0% { left: 10px; transform: scale(1); }
+    30% { left: 35px; transform: scale(1.1) rotate(10deg); }
+    50% { left: 35px; transform: scale(1.1) rotate(10deg); }
+    80% { left: 10px; transform: scale(1) rotate(0deg); opacity: 1; }
+    100% { left: 10px; opacity: 0; }
+  }
+
+  @keyframes char2Hug {
+    0% { right: 10px; transform: scale(1); }
+    30% { right: 35px; transform: scale(1.1) rotate(-10deg); }
+    50% { right: 35px; transform: scale(1.1) rotate(-10deg); }
+    80% { right: 10px; transform: scale(1) rotate(0deg); opacity: 1; }
+    100% { right: 10px; opacity: 0; }
+  }
+
+  @keyframes heartPop {
+    0%, 30% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+    40% { opacity: 1; transform: translateX(-50%) scale(1.3); }
+    60% { opacity: 1; transform: translateX(-50%) scale(1); }
+    80% { opacity: 0; transform: translateX(-50%) scale(0.8); }
+    100% { opacity: 0; }
+  }
+
+  .confetti-container {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 99;
+    display: none;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    animation: confettiFall 1.5s ease-in forwards;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  .tap-hint {
+    font-size: 0.85rem;
+    color: #e0569a;
+    font-weight: 700;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+    animation: pulseHint 2s infinite;
+  }
+
+  @keyframes pulseHint {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+
+  .footer-note {
+    font-size: 0.8rem;
+    color: #c4a0d8;
+    margin-top: 1.2rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="confetti-container" id="confetti"></div>
+
+<div class="card">
+  <div class="bear-container bounce" id="bear" onclick="bearClick()" title="¡Tócame!">
+    <div id="bubble" class="speech-bubble">¡Te quiero! 🐻💕</div>
+    
+    <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="38" cy="45" r="22" fill="#d4935a"/>
+      <circle cx="38" cy="45" r="14" fill="#f2c18a"/>
+      <circle cx="122" cy="45" r="22" fill="#d4935a"/>
+      <circle cx="122" cy="45" r="14" fill="#f2c18a"/>
+      <ellipse cx="80" cy="80" rx="52" ry="50" fill="#d4935a"/>
+      <ellipse cx="80" cy="90" rx="32" ry="25" fill="#f2c18a"/>
+      <g class="blink" style="transform-origin: 63px 72px;">
+        <ellipse cx="63" cy="72" rx="7" ry="8" fill="#3a2010"/>
+        <circle cx="66" cy="70" r="2.5" fill="white"/>
+      </g>
+      <g class="blink" style="transform-origin: 97px 72px;">
+        <ellipse cx="97" cy="72" rx="7" ry="8" fill="#3a2010"/>
+        <circle cx="100" cy="70" r="2.5" fill="white"/>
+      </g>
+      <ellipse cx="80" cy="86" rx="9" ry="6" fill="#7a3a1e"/>
+      <path d="M70 96 Q80 108 90 96" stroke="#7a3a1e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="54" cy="90" rx="10" ry="6" fill="#e8a070" opacity="0.5"/>
+      <ellipse cx="106" cy="90" rx="10" ry="6" fill="#e8a070" opacity="0.5"/>
+      <path d="M76 58 C76 54 70 54 70 58 C70 62 76 66 76 66 C76 66 82 62 82 58 C82 54 76 54 76 58Z" fill="#f472b6" opacity="0.9"/>
+    </svg>
+  </div>
+
+  <p class="tap-hint">👆 Tóca el osito 🐻 Tengo muchos mensajitos para ti</p>
+
+  <h1>Hey tú Cami pisciosaaa 🌸</h1>
+
+  <p class="subtitle">¡Tu brillo es más fuerte que cualquier día difícil! 💜</p>
+
+  <div class="message-box">
+    <p>
+      Sé que estás en modo "mil cosas a la vez" 🌀<br>
+      pero este osito te manda un recordatorio:<br><br>
+      <strong>Eres increíble.</strong> Ya lo resolviste antes,<br>
+      lo vas a resolver ahora también. <span class="heart-emoji">❤️</span>
+    </p>
+  </div>
+
+  <button class="hug-btn" onclick="sendHug()">
+    <div class="hug-animation-container" id="hugAnimation">
+      <span class="hug-char char-1">😚</span>
+      <span class="hug-char heart-pop">💖</span>
+      <span class="hug-char char-2">🤗</span>
+    </div>
+    <span id="btnText">¡Tócame para darte un abrazo virtual! 💝</span>
+  </button>
+
+  <p class="footer-note">Con amor, desde aquí hasta donde estés 💌</p>
+</div>
+
+<script>
+  const phrases = [
+    "¡Te quiero! 🐻💕", 
+    "¡Eres la mejor! ✨", 
+    "¡Eres la mas linda! 🫂", 
+    "¡Tú puedes! 💪", 
+    "¡Muak! 💋",
+    "¡Ánimo, bonita! 🌸",
+    "¡Lo haces genial! ⭐",
+    "¡Te mando un abrazo! 🤗",
+    "¡Eres pura magia! 💫",
+    "¡Sonríe, porfa! 😊"
+  ];
+  
+  let phraseIdx = 0;
+  const bubble = document.getElementById('bubble');
+  let bubbleTimer;
+
+  function bearClick() {
+    const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+    bubble.textContent = randomPhrase;
+    bubble.style.display = 'block';
+    clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(() => { bubble.style.display = 'none'; }, 2000);
+  }
+
+  function sendHug() {
+    launchConfetti();
+    const btnText = document.getElementById('btnText');
+    const hugAnim = document.getElementById('hugAnimation');
+    const btn = document.querySelector('.hug-btn');
+
+    hugAnim.style.display = 'block';
+    btnText.textContent = '¡Recibido! 🥰💞';
+    btn.style.pointerEvents = 'none';
+
+    setTimeout(() => {
+      hugAnim.style.display = 'none';
+      btnText.textContent = '¡Tócame para darte un abrazo virtual! 🐻';
+      btn.style.pointerEvents = 'auto';
+    }, 2500);
+  }
+
+  function launchConfetti() {
+    const container = document.getElementById('confetti');
+    container.style.display = 'block';
+    container.innerHTML = '';
+    const colors = ['#f472b6', '#c084fc', '#fb923c', '#34d399', '#60a5fa', '#fbbf24'];
+    for (let i = 0; i < 60; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.top = '-20px';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.width = (Math.random() * 10 + 6) + 'px';
+      piece.style.height = (Math.random() * 10 + 6) + 'px';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      piece.style.animationDelay = (Math.random() * 0.8) + 's';
+      piece.style.animationDuration = (Math.random() * 1 + 1) + 's';
+      container.appendChild(piece);
+    }
+    setTimeout(() => { container.style.display = 'none'; }, 2500);
+  }
+
+  const starsContainer = document.getElementById('stars');
+  const emojis = ['✨', '💕', '🌸', '⭐', '💫', '🌷', '💗'];
+  for (let i = 0; i < 18; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    star.style.left = Math.random() * 100 + 'vw';
+    star.style.fontSize = (Math.random() * 14 + 14) + 'px';
+    star.style.animationDuration = (Math.random() * 10 + 12) + 's';
+    star.style.animationDelay = (Math.random() * 12) + 's';
+    starsContainer.appendChild(star);
+  }
+</script>
+</body>
+</html>
